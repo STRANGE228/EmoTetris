@@ -85,17 +85,47 @@ void PaintDevice::clear() {
 	{
 		for (int y = 0; y < m_BufferSize.Y; y++)
 		{
-			set_char(Vector2(x, y), L' ');
+			set_char(Vector2(x, y), L' ', 0);
 		}
 	}
 }
 
-void PaintDevice::set_char(const Vector2& position, wchar_t c) {
+void PaintDevice::set_char(const Vector2& position, wchar_t c, int color) {
 	if (!m_Ready) return;
 	if (Square(Vector2(0, 0), m_Size).hit(position)) {
 		const int idx = position.x() + m_BufferSize.X * position.y();
 		m_Buffer[idx].Char.UnicodeChar = c;
-		m_Buffer[idx].Attributes = FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_INTENSITY;
+		switch (color)
+		{
+		case 0:
+			m_Buffer[idx].Attributes = FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_INTENSITY;
+			break;
+		case 1:
+			m_Buffer[idx].Attributes = FOREGROUND_BLUE | FOREGROUND_INTENSITY;
+			break;
+		case 2:
+			m_Buffer[idx].Attributes = FOREGROUND_RED | FOREGROUND_INTENSITY;
+			break;
+		case 3:
+			m_Buffer[idx].Attributes = FOREGROUND_GREEN | FOREGROUND_RED | FOREGROUND_INTENSITY;
+			break;
+		case 4:
+			m_Buffer[idx].Attributes = FOREGROUND_GREEN | FOREGROUND_INTENSITY;
+			break;
+		case 5:
+			m_Buffer[idx].Attributes = FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_INTENSITY;
+			break;
+		case 6:
+			m_Buffer[idx].Attributes = FOREGROUND_BLUE | FOREGROUND_INTENSITY;
+			break;
+		case 7:
+			m_Buffer[idx].Attributes = FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_INTENSITY;
+			break;
+		default:
+			m_Buffer[idx].Attributes = FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN;
+			break;
+		}
+		//m_Buffer[idx].Attributes = FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_INTENSITY;
 		//m_Buffer[idx].Attributes = FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED;
 	}
 }

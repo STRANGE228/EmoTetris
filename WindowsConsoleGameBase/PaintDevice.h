@@ -13,7 +13,7 @@ public:
 	void resize(const Size& size);
 	void clear();
 
-	void set_char(const Vector2& position, wchar_t c);
+	void set_char(const Vector2& position, wchar_t c, int color);
 	wchar_t get_char(const Vector2& position);
 
 	void render();

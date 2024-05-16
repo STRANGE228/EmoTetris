@@ -5,8 +5,8 @@
 Tetris::Tetris() {
 	paint_device().resize(Size(m_Width + 6, m_Height));
 	m_GameField.resize(m_Width, m_Height);
-	m_Figure = new IBlock(Point(5, 1));
-	m_NextFigure = new IBlock(Point(15, 1));
+	m_Figure = CreateFigure::create(Point(5, 1));
+	m_NextFigure = CreateFigure::create(Point(15, 1));
 	track_key(VK_LEFT);
 	track_key(VK_RIGHT);
 	track_key(VK_DOWN);
@@ -48,7 +48,7 @@ void Tetris::on_button_press(const int button)
 		retry();
 		break;
 	case 0x50:
-		m_Score += 4;
+		m_Score += 1236;
 		break;
 	case 0x45:
 		exit(0);
@@ -71,9 +71,12 @@ void Tetris::update(const int dt)
 		{
 			m_Figure->restore();
 			m_Score += m_GameField.merge(*m_Figure);
+			if (m_Score > 99999)
+				m_Score = 99999;
 			m_Figure = m_NextFigure;
 			m_Figure->set_position(Point(5, 1));
-			m_NextFigure = new IBlock(Point(15, 1));
+			//m_NextFigure = new IBlock(Point(15, 1));
+			m_NextFigure = CreateFigure::create(Point(15, 1));
 		}
 	}
 }
@@ -91,14 +94,14 @@ void Tetris::render(PaintDevice& paintDevice)
 void Tetris::drawScore(PaintDevice& paintDevice) {
 	std::string score = std::to_string(m_Score);
 	
-	paintDevice.set_char(Vector2(14, 4), 'S');
-	paintDevice.set_char(Vector2(15, 4), 'C');
-	paintDevice.set_char(Vector2(16, 4), 'O');
-	paintDevice.set_char(Vector2(17, 4), 'R');
-	paintDevice.set_char(Vector2(18, 4), 'E');
-	paintDevice.set_char(Vector2(19, 4), ':');
+	paintDevice.set_char(Vector2(14, 6), 'S', 0);
+	paintDevice.set_char(Vector2(15, 6), 'C', 0);
+	paintDevice.set_char(Vector2(16, 6), 'O', 0);
+	paintDevice.set_char(Vector2(17, 6), 'R', 0);
+	paintDevice.set_char(Vector2(18, 6), 'E', 0);
+	paintDevice.set_char(Vector2(19, 6), ':', 0);
 	for (int i = 0; i < score.size(); i++) {
-		paintDevice.set_char(Vector2(14 + i, 5), score[i]);
+		paintDevice.set_char(Vector2(14 + i, 7), score[i], 0);
 	}
 }
 

@@ -1,7 +1,7 @@
 #include "ExampleGame.h"
 
 void Bullet::render(PaintDevice& paintDevice) {
-	paintDevice.set_char(m_Position, '|');
+	paintDevice.set_char(m_Position, '|', 0);
 }
 
 void Bullet::update(const int dt) {
@@ -89,13 +89,13 @@ void Gun::update(const int dt) {
 
 void Gun::render(PaintDevice& paintDevice) {
 	for (const Vector2& point : m_Body) {
-		paintDevice.set_char(Vector2(m_Position.x() + point.x(), m_Position.y() + point.y()), 0x2588);
+		paintDevice.set_char(Vector2(m_Position.x() + point.x(), m_Position.y() + point.y()), 0x2588, 0);
 	}
 }
 
 void Enemy::render(PaintDevice& paintDevice) {
 	for (const Vector2& point : m_Enemys) {
-		paintDevice.set_char(point, 0x25BC);
+		paintDevice.set_char(point, 0x25BC, 0);
 	}
 }
 

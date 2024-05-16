@@ -3,6 +3,8 @@
 Figure::Figure(Point position)
 {
 	m_Position = position;
+	srand(time(0));
+	color = 1 + (rand() % 7);
 }
 
 void Figure::update(double dt)
@@ -19,7 +21,7 @@ void Figure::render(PaintDevice& paintDevice)
 	for (const Point& point : m_Body[m_CurrentRotate]) {
 		Vector2 v(point.x + m_Position.x,
 			point.y + m_Position.y);
-		paintDevice.set_char(v, 0x25D8);
+		paintDevice.set_char(v, 0x25D8, color);
 	}
 }
 

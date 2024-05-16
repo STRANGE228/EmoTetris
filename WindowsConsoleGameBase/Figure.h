@@ -22,6 +22,7 @@ protected:
 	Point m_PositionBackup;
 	size_t m_CurrentRotate = 0;
 	size_t m_CurrentRotateBackup = 0;
+	int color = 0;
 public:
 	Figure(Point position);
 	void update(double dt);
